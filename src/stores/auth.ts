@@ -9,10 +9,6 @@ interface Auth {
 export default class AuthStore {
   auth?: Auth
 
-  constructor() {
-    this.logout()
-  }
-
   get token() {
     if (!this.auth) throw new Error('Error accessing token')
     return this.auth.token
