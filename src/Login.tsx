@@ -88,6 +88,7 @@ class LoginScreen extends React.Component<{
               backgroundColor: 'green',
               borderRadius: 4
             }}
+            onPress={() => this.onLoginPress()}
           >
             <Text style={{ color: 'white'}}>
               Login
