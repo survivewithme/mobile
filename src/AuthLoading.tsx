@@ -8,6 +8,11 @@ class OnboardingScreen extends React.Component<{
   navigation: any
 }> {
   async componentDidMount() {
+    // If already loaded redirect and abort load
+    if (this.props.auth.auth) {
+      this.props.navigation.navigate('App')
+      return
+    }
     await this.props.auth.loadAuth()
     if (this.props.auth.auth) {
       this.props.navigation.navigate('App')

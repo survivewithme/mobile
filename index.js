@@ -7,7 +7,7 @@ import { name } from './app.json'
 import axios from 'axios'
 
 axios.defaults.baseURL = 'https://backend.survivewithme.now.sh'
-axios.defaults.baseURL = 'http://localhost:4000'
+// axios.defaults.baseURL = 'http://localhost:4000'
 axios.defaults.headers['content-type'] = 'application/json'
 
 const stores = {

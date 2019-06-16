@@ -9,6 +9,10 @@ interface Auth {
 export default class AuthStore {
   auth?: Auth
 
+  constructor() {
+    this.logout()
+  }
+
   get token() {
     if (!this.auth) throw new Error('Error accessing token')
     return this.auth.token
@@ -20,16 +24,17 @@ export default class AuthStore {
     this.auth = JSON.parse(storedData.password)
   }
 
+  async logout() {
+    await Keychain.resetGenericPassword()
+  }
+
   async login(options: { email: string, password: string }) {
     try {
-      const { data } = await axios.post('/users/login', {
-        ...options,
-        token: this.token,
-      })
+      const { data } = await axios.post('/users/login', options)
       await Keychain.setGenericPassword(options.email, JSON.stringify(data))
       this.auth = data
     } catch (err) {
-      console.log('Error logging in')
+      console.log('Error logging in', err)
       throw err
     }
   }
