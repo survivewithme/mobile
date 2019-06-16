@@ -1,11 +1,19 @@
 import React from 'react'
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 import { inject, observer } from 'mobx-react'
+import { NavigationScreenProps } from 'react-navigation'
 
-class HomeScreen extends React.Component<{}> {
+class HomeScreen extends React.Component<{
+  navigation: any
+}> {
+  static navigationOptions = ({ navigation }: NavigationScreenProps) => ({
+    title: 'Home',
+  })
   render() {
     return (
-      <View />
+      <Text>
+        Home Screen
+      </Text>
     )
   }
 }
