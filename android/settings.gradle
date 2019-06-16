@@ -1,0 +1,3 @@
+rootProject.name = 'survivewithme'
+
+include ':app'
