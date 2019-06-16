@@ -1,10 +1,19 @@
 import React from 'react'
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 import { inject, observer } from 'mobx-react'
+import { NavigationScreenProps } from 'react-navigation'
 
 class LoginScreen extends React.Component<{}> {
+  static navigationOptions = ({ navigation }: NavigationScreenProps) => ({
+    header: null,
+  })
+
   render() {
-    return <View />
+    return (
+      <Text>
+        Login
+      </Text>
+    )
   }
 }
 

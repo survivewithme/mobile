@@ -5,7 +5,17 @@ import AuthStore from './stores/auth'
 
 class OnboardingScreen extends React.Component<{
   auth: AuthStore
+  navigation: any
 }> {
+  async componentDidMount() {
+    await this.props.auth.loadAuth()
+    if (this.props.auth.auth) {
+      this.props.navigation.navigate('App')
+    } else {
+      this.props.navigation.navigate('LoginScreen')
+    }
+  }
+
   render() {
     return (
       <Text>
