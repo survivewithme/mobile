@@ -1,9 +1,23 @@
-/**
- * @format
- */
+import React from 'react'
+import { AppRegistry } from 'react-native'
+import Navigator from './src'
+import { Provider } from 'mobx-react'
+import AuthStore from './src/stores/auth'
+import { name } from './app.json'
+import axios from 'axios'
 
-import {AppRegistry} from 'react-native';
-import App from './App';
-import {name as appName} from './app.json';
+axios.defaults.baseURL = 'https://backend.survivewithme.now.sh'
+axios.defaults.baseURL = 'http://localhost:4000'
+axios.defaults.headers['content-type'] = 'application/json'
 
-AppRegistry.registerComponent(appName, () => App);
+const stores = {
+  auth: new AuthStore(),
+}
+
+const App = () => (
+  <Provider {...stores}>
+    <Navigator />
+  </Provider>
+)
+
+AppRegistry.registerComponent(name, () => App)
