@@ -2,19 +2,19 @@ import { decorate, observable } from 'mobx'
 import axios from 'axios'
 import auth from './auth'
 
-interface Answer {
+export interface Answer {
   _id: string
   text: string
   pointValue?: number
 }
 
-interface Question {
+export interface Question {
   _id: string
   text: string
   answers: Answer[]
 }
 
-interface Quiz {
+export interface Quiz {
   _id: string
   questions: Question[]
 }
@@ -22,6 +22,7 @@ interface Quiz {
 export default class QuizStore {
   @observable _byId: { [key: string]: Quiz } = {}
   quizzes: Quiz[] = []
+  dailyQuiz?: Quiz
 
   async loadQuizzes() {
     try {
@@ -36,8 +37,23 @@ export default class QuizStore {
       throw err
     }
   }
+
+  async loadDailyQuiz() {
+    try {
+      const { data } = await axios.get('/quizzes/daily', {
+        params: {
+          token: auth.token,
+        },
+      })
+      this.dailyQuiz = data
+    } catch (err) {
+      console.log('Error loading daily quiz', err)
+      throw err
+    }
+  }
 }
 
 decorate(QuizStore, {
   quizzes: observable,
+  dailyQuiz: observable,
 })

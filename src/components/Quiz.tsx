@@ -7,25 +7,20 @@ import {
   Dimensions
 } from 'react-native'
 import { inject, observer } from 'mobx-react'
-import QuizStore from '../stores/quiz'
+import QuizStore, { Quiz } from '../stores/quiz'
 
 class QuizComponent extends React.Component<{
-  quiz: QuizStore
+  _quiz?: QuizStore
+  quiz?: Quiz
 }> {
   state = {
     percentComplete: 0,
   }
 
-  async componentDidMount() {
-    await this.props.quiz.loadQuizzes()
-  }
-
   render() {
     const { height } = Dimensions.get('window')
-    if (!this.props.quiz.quizzes.length) {
-      return null
-    }
-    const [ quiz ] = this.props.quiz.quizzes
+    const { quiz } = this.props
+    if (!quiz) return null
     return (
       <View>
         <ScrollView
