@@ -15,9 +15,10 @@ class DailyQuizScreen extends React.Component<{
     quizId: undefined,
   }
 
-  async componentDidMount() {
-    await this.props.quiz.loadDailyQuiz()
-  }
+  // Daily quiz loading delegated to Home screen
+  // async componentDidMount() {
+  //   await this.props.quiz.loadDailyQuiz()
+  // }
 
   render() {
     return (
