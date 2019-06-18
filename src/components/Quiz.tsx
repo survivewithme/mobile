@@ -4,10 +4,13 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
-  Dimensions
+  Dimensions,
+  Button,
 } from 'react-native'
 import { inject, observer } from 'mobx-react'
 import QuizStore, { Quiz } from '../stores/quiz'
+import QuizButton from './QuizButton'
+import QuizQuestionCell from './QuizQuestionCell'
 
 class QuizComponent extends React.Component<{
   _quiz?: QuizStore
@@ -22,7 +25,7 @@ class QuizComponent extends React.Component<{
     const { quiz } = this.props
     if (!quiz) return null
     return (
-      <View>
+      <View style={{ flex: 1 }}>
         <ScrollView
           onScroll={(e) => {
             const { y } = e.nativeEvent.contentOffset
@@ -33,28 +36,20 @@ class QuizComponent extends React.Component<{
           snapToInterval={height}
         >
           {quiz.questions.map((question) => (
-            <View
-              key={question.text}
-              style={{
-                minHeight: height,
-              }}
-            >
-              <Text style={{ margin: 8, fontSize: 18 }}>{question.text}</Text>
-              {question.answers.map((answer) => (
-                <TouchableOpacity
-                  key={answer.text}
-                  style={{
-                    backgroundColor: 'blue',
-                    borderRadius: 4,
-                    padding: 8,
-                    margin: 8,
-                  }}
-                >
-                  <Text style={{ color: 'white' }}>{answer.text}</Text>
-                </TouchableOpacity>
-              ))}
-            </View>
+            <QuizQuestionCell
+              key={question._id}
+              answerSelected={() => {}}
+              question={question}
+              style={{ minHeight: height }}
+            />
           ))}
+          <View style={{ minHeight: height }}>
+            <Text>Evaluation complete</Text>
+            <Button
+              title="Save and exit"
+              onPress={() => this.props.navigation.goBack()}
+            />
+          </View>
         </ScrollView>
         <View
           style={{
@@ -66,11 +61,13 @@ class QuizComponent extends React.Component<{
             height: 20
           }}
         >
-        <View style={{
-          height: '100%',
-          width: `${this.state.percentComplete}%`,
-          backgroundColor: 'green',
-        }} />
+          <View
+            style={{
+              height: '100%',
+              width: `${this.state.percentComplete}%`,
+              backgroundColor: 'green',
+            }}
+          />
         </View>
       </View>
     )

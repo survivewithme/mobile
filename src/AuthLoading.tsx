@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 import { inject, observer } from 'mobx-react'
-import AuthStore from './stores/auth'
+import { AuthStore } from './stores/auth'
 
 class OnboardingScreen extends React.Component<{
   auth: AuthStore

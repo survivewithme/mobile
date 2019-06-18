@@ -22,9 +22,7 @@ class DailyQuizScreen extends React.Component<{
 
   render() {
     return (
-      <>
-        <Quiz quiz={this.props.quiz.dailyQuiz} />
-      </>
+      <Quiz quiz={this.props.quiz.dailyQuiz} />
     )
   }
 }

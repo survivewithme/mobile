@@ -2,12 +2,12 @@ import { decorate, observable } from 'mobx'
 import axios from 'axios'
 import * as Keychain from 'react-native-keychain'
 
-interface Auth {
+export interface Auth {
   _id: string
   token: string
 }
 
-class AuthStore {
+export class AuthStore {
   auth?: Auth
 
   get token() {
