@@ -2,7 +2,8 @@ import React from 'react'
 import { AppRegistry } from 'react-native'
 import Navigator from './src'
 import { Provider } from 'mobx-react'
-import AuthStore from './src/stores/auth'
+import auth from './src/stores/auth'
+import QuizStore from './src/stores/quiz'
 import { name } from './app.json'
 import axios from 'axios'
 
@@ -11,7 +12,8 @@ axios.defaults.baseURL = 'https://backend.survivewithme.now.sh'
 axios.defaults.headers['content-type'] = 'application/json'
 
 const stores = {
-  auth: new AuthStore(),
+  auth,
+  quiz: new QuizStore(),
 }
 
 const App = () => (

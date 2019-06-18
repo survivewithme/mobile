@@ -6,7 +6,8 @@ interface Auth {
   _id: string
   token: string
 }
-export default class AuthStore {
+
+class AuthStore {
   auth?: Auth
 
   get token() {
@@ -39,3 +40,5 @@ export default class AuthStore {
 decorate(AuthStore, {
   auth: observable,
 })
+
+export default new AuthStore()
