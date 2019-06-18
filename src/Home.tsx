@@ -1,19 +1,23 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, Button } from 'react-native'
 import { inject, observer } from 'mobx-react'
-import { NavigationScreenProps } from 'react-navigation'
+import { NavigationScreenProps, NavigationParams } from 'react-navigation'
 import Quiz from './components/Quiz'
 
 class HomeScreen extends React.Component<{
-  navigation: any
+  navigation: NavigationParams
 }> {
   static navigationOptions = ({ navigation }: NavigationScreenProps) => ({
     title: 'Home',
   })
+
   render() {
     return (
       <View style={{ margin: 8 }}>
-        <Quiz />
+        <Button title="Submit Daily Quiz" onPress={() => {
+          console.log('test')
+          this.props.navigation.navigate('DailyQuizScreen')
+        }} />
       </View>
     )
   }

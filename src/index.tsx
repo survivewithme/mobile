@@ -3,9 +3,11 @@ import HomeScreen from './Home'
 import LoginScreen from './Login'
 import OnboardingScreen from './Onboarding'
 import AuthLoading from './AuthLoading'
+import DailyQuizScreen from './DailyQuiz'
 
 const AppStack = createStackNavigator({
   HomeScreen,
+  DailyQuizScreen,
 }, {
   initialRouteName: 'HomeScreen',
 })
