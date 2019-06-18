@@ -2,6 +2,7 @@ import React from 'react'
 import { Question } from '../stores/quiz'
 import { View, Text } from 'react-native'
 import QuizButton from './QuizButton'
+import Colors from '../Colors'
 
 export default class QuizQuestionCell extends React.Component<{
   question: Question
@@ -9,6 +10,10 @@ export default class QuizQuestionCell extends React.Component<{
   answerSelected: () => void
   key?: string
 }> {
+  state = {
+    selectedAnswerId: undefined,
+  }
+
   render() {
     return (
       <View
@@ -25,8 +30,15 @@ export default class QuizQuestionCell extends React.Component<{
         </Text>
         {this.props.question.answers.map((answer) => (
           <QuizButton
-            answerSelected={this.props.answerSelected}
             answer={answer}
+            style={{
+              backgroundColor:
+                answer._id === this.state.selectedAnswerId ? Colors.green : Colors.blue,
+            }}
+            answerSelected={() => {
+              this.setState({ selectedAnswerId: answer._id })
+              this.props.answerSelected()
+            }}
           />
         ))}
       </View>

@@ -28,17 +28,21 @@ class QuizComponent extends React.Component<{
       <View style={{ flex: 1 }}>
         <ScrollView
           onScroll={(e) => {
-            const { y } = e.nativeEvent.contentOffset
+            const { contentOffset, contentOffset: { y } } = e.nativeEvent
+            // Roughly calculate the percent down the screen
             const _percentComplete = 100 * y / height / (quiz.questions.length - 1)
             const percentComplete = Math.min(Math.abs(_percentComplete), 100)
-            this.setState({ percentComplete })
+            this.setState({ contentOffset, percentComplete })
           }}
           snapToInterval={height}
         >
           {quiz.questions.map((question) => (
             <QuizQuestionCell
               key={question._id}
-              answerSelected={() => {}}
+              answerSelected={() => {
+                // Scroll down
+
+              }}
               question={question}
               style={{ minHeight: height }}
             />
