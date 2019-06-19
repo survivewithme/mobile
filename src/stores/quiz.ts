@@ -23,6 +23,11 @@ export default class QuizStore {
   @observable _byId: { [key: string]: Quiz } = {}
   quizzes: Quiz[] = []
   dailyQuiz?: Quiz
+  dailyQuestion?: {
+    quizId: string
+    question: Question
+  }
+  dailyQuestionCompleted = true
 
   async loadQuizzes() {
     try {
@@ -52,6 +57,28 @@ export default class QuizStore {
     }
   }
 
+  async loadDailyQuestion() {
+    try {
+      const [ { data }, { data: { completed }}] = await Promise.all([
+        axios.get('/questions/daily', {
+          params: {
+            token: auth.token,
+          },
+        }),
+        axios.get('/questions/daily/completed', {
+          params: {
+            token: auth.token,
+          },
+        })
+      ])
+      this.dailyQuestion = data
+      this.dailyQuestionCompleted = completed
+    } catch (err) {
+      console.log('Error loading daily question', err)
+      throw err
+    }
+  }
+
   async submitQuizAnswer(answer: {
     quizId: string
     answerId: string
@@ -72,4 +99,6 @@ export default class QuizStore {
 decorate(QuizStore, {
   quizzes: observable,
   dailyQuiz: observable,
+  dailyQuestion: observable,
+  dailyQuestionCompleted: observable,
 })
