@@ -51,6 +51,22 @@ export default class QuizStore {
       throw err
     }
   }
+
+  async submitQuizAnswer(answer: {
+    quizId: string
+    answerId: string
+    questionId: string
+  }) {
+    try {
+      await axios.post('/quizzes/answer', {
+        ...answer,
+        token: auth.token,
+      })
+    } catch (err) {
+      console.log('Error submiting quiz answer', err)
+      throw err
+    }
+  }
 }
 
 decorate(QuizStore, {

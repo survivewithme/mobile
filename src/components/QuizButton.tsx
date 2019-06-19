@@ -7,11 +7,12 @@ export default class QuizButton extends React.Component<{
   answer: Answer
   answerSelected: () => void
   style?: any
+  key?: string
 }> {
   render() {
     return (
       <TouchableOpacity
-        key={this.props.answer._id}
+        key={this.props.key}
         style={{
           backgroundColor: Colors.blue,
           borderRadius: 4,

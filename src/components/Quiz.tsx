@@ -7,13 +7,13 @@ import {
   Button,
 } from 'react-native'
 import { inject, observer } from 'mobx-react'
-import QuizStore, { Quiz } from '../stores/quiz'
+import QuizStore, { Quiz, Answer } from '../stores/quiz'
 import QuizQuestionCell from './QuizQuestionCell'
 import Colors from '../Colors'
 
 class QuizComponent extends React.Component<{
-  _quiz?: QuizStore
-  quiz?: Quiz
+  quiz?: QuizStore
+  _quiz?: Quiz
   onComplete: () => void
 }> {
 
@@ -25,7 +25,7 @@ class QuizComponent extends React.Component<{
 
   render() {
     const { height } = Dimensions.get('window')
-    const { quiz } = this.props
+    const { _quiz: quiz } = this.props
     if (!quiz) return null
     return (
       <View style={{ flex: 1 }}>
@@ -43,21 +43,24 @@ class QuizComponent extends React.Component<{
           {quiz.questions.map((question) => (
             <QuizQuestionCell
               key={question._id}
-              answerSelected={() => {
-                setTimeout(() => {
-                  this.scrollViewRef.current.scrollTo({
-                    y: this.state.yOffset + height,
-                  })
-                }, 500)
+              answerSelected={async (answer: Answer) => {
+                await this.props.quiz.submitQuizAnswer({
+                  quizId: quiz._id,
+                  questionId: question._id,
+                  answerId: answer._id,
+                })
+                this.scrollViewRef.current.scrollTo({
+                  y: this.state.yOffset + height,
+                })
               }}
               question={question}
               style={{ minHeight: height }}
             />
           ))}
           <View style={{ minHeight: height }}>
-            <Text style={{ fontSize: 20, padding: 8 }}>Evaluation complete</Text>
+            <Text style={{ fontSize: 20, padding: 8 }}>Evaluation Saved</Text>
             <Button
-              title="Save and exit"
+              title="Back"
               onPress={this.props.onComplete}
             />
           </View>

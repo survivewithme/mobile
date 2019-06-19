@@ -1,5 +1,5 @@
 import React from 'react'
-import { Question } from '../stores/quiz'
+import { Question, Answer } from '../stores/quiz'
 import { View, Text } from 'react-native'
 import QuizButton from './QuizButton'
 import Colors from '../Colors'
@@ -7,7 +7,7 @@ import Colors from '../Colors'
 export default class QuizQuestionCell extends React.Component<{
   question: Question
   style?: any
-  answerSelected: () => void
+  answerSelected: (answer: Answer) => void
   key?: string
 }> {
   state = {
@@ -30,6 +30,7 @@ export default class QuizQuestionCell extends React.Component<{
         </Text>
         {this.props.question.answers.map((answer) => (
           <QuizButton
+            key={answer._id}
             answer={answer}
             style={{
               backgroundColor:
@@ -37,7 +38,7 @@ export default class QuizQuestionCell extends React.Component<{
             }}
             answerSelected={() => {
               this.setState({ selectedAnswerId: answer._id })
-              this.props.answerSelected()
+              this.props.answerSelected(answer)
             }}
           />
         ))}
