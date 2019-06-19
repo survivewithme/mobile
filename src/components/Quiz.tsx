@@ -3,21 +3,24 @@ import {
   View,
   Text,
   ScrollView,
-  TouchableOpacity,
   Dimensions,
   Button,
 } from 'react-native'
 import { inject, observer } from 'mobx-react'
 import QuizStore, { Quiz } from '../stores/quiz'
-import QuizButton from './QuizButton'
 import QuizQuestionCell from './QuizQuestionCell'
+import Colors from '../Colors'
 
 class QuizComponent extends React.Component<{
   _quiz?: QuizStore
   quiz?: Quiz
+  onComplete: () => void
 }> {
+
+  scrollViewRef = React.createRef<ScrollView>()
   state = {
     percentComplete: 0,
+    yOffset: 0,
   }
 
   render() {
@@ -27,12 +30,13 @@ class QuizComponent extends React.Component<{
     return (
       <View style={{ flex: 1 }}>
         <ScrollView
+          ref={this.scrollViewRef}
           onScroll={(e) => {
-            const { contentOffset, contentOffset: { y } } = e.nativeEvent
+            const { contentOffset: { y } } = e.nativeEvent
             // Roughly calculate the percent down the screen
             const _percentComplete = 100 * y / height / (quiz.questions.length - 1)
             const percentComplete = Math.min(Math.abs(_percentComplete), 100)
-            this.setState({ contentOffset, percentComplete })
+            this.setState({ yOffset: y, percentComplete })
           }}
           snapToInterval={height}
         >
@@ -40,18 +44,21 @@ class QuizComponent extends React.Component<{
             <QuizQuestionCell
               key={question._id}
               answerSelected={() => {
-                // Scroll down
-
+                setTimeout(() => {
+                  this.scrollViewRef.current.scrollTo({
+                    y: this.state.yOffset + height,
+                  })
+                }, 500)
               }}
               question={question}
               style={{ minHeight: height }}
             />
           ))}
           <View style={{ minHeight: height }}>
-            <Text>Evaluation complete</Text>
+            <Text style={{ fontSize: 20, padding: 8 }}>Evaluation complete</Text>
             <Button
               title="Save and exit"
-              onPress={() => this.props.navigation.goBack()}
+              onPress={this.props.onComplete}
             />
           </View>
         </ScrollView>
@@ -61,15 +68,15 @@ class QuizComponent extends React.Component<{
             bottom: 0,
             left: 0,
             right: 0,
-            backgroundColor: '#000',
-            height: 20
+            backgroundColor: Colors.blue,
+            height: 4,
           }}
         >
           <View
             style={{
               height: '100%',
               width: `${this.state.percentComplete}%`,
-              backgroundColor: 'green',
+              backgroundColor: Colors.green,
             }}
           />
         </View>
