@@ -12,6 +12,7 @@ export default class QuizQuestionCell extends React.Component<{
 }> {
   state = {
     selectedAnswerId: undefined,
+    debouncePromise: undefined,
   }
 
   render() {
@@ -36,9 +37,14 @@ export default class QuizQuestionCell extends React.Component<{
               backgroundColor:
                 answer._id === this.state.selectedAnswerId ? Colors.green : Colors.blue,
             }}
-            answerSelected={() => {
+            answerSelected={async () => {
+              if (this.state.debouncePromise) return
               this.setState({ selectedAnswerId: answer._id })
               this.props.answerSelected(answer)
+              const debouncePromise = new Promise((r) => setTimeout(r, 2500))
+              this.setState({ debouncePromise })
+              await debouncePromise
+              this.setState({ debouncePromise: undefined })
             }}
           />
         ))}
