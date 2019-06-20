@@ -73,6 +73,7 @@ export default class QuizStore {
         }),
         axios.get('/questions/daily/completed', {
           params: {
+            utcOffset: new Date().getTimezoneOffset(),
             token: auth.token,
           },
         }),
