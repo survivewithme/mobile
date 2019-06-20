@@ -25,7 +25,7 @@ export class AuthStore {
     await Keychain.resetGenericPassword()
   }
 
-  async login(options: { email: string, password: string }) {
+  async login(options: { email: string; password: string }) {
     try {
       const { data } = await axios.post('/users/login', options)
       await Keychain.setGenericPassword(options.email, JSON.stringify(data))

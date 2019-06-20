@@ -17,10 +17,7 @@ export default class QuizQuestionCell extends React.Component<{
 
   render() {
     return (
-      <View
-        key={this.props.key}
-        style={this.props.style || {}}
-      >
+      <View key={this.props.key} style={this.props.style || {}}>
         <Text
           style={{
             margin: 8,
@@ -35,7 +32,9 @@ export default class QuizQuestionCell extends React.Component<{
             answer={answer}
             style={{
               backgroundColor:
-                answer._id === this.state.selectedAnswerId ? Colors.green : Colors.blue,
+                answer._id === this.state.selectedAnswerId
+                  ? Colors.green
+                  : Colors.blue,
             }}
             answerSelected={async () => {
               if (this.state.debouncePromise) return

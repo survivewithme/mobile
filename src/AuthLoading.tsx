@@ -22,11 +22,7 @@ class OnboardingScreen extends React.Component<{
   }
 
   render() {
-    return (
-      <Text>
-        Loading auth...
-      </Text>
-    )
+    return <Text>Loading auth...</Text>
   }
 }
 

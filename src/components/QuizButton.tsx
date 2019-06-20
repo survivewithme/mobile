@@ -23,11 +23,7 @@ export default class QuizButton extends React.Component<{
         }}
         onPress={this.props.answerSelected}
       >
-        <Text
-          style={{ color: Colors.white }}
-        >
-          {this.props.answer.text}
-        </Text>
+        <Text style={{ color: Colors.white }}>{this.props.answer.text}</Text>
       </TouchableOpacity>
     )
   }

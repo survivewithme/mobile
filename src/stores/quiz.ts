@@ -60,7 +60,12 @@ export default class QuizStore {
 
   async loadDailyQuestion() {
     try {
-      const [ { data }, { data: { completed }}] = await Promise.all([
+      const [
+        { data },
+        {
+          data: { completed },
+        },
+      ] = await Promise.all([
         axios.get('/questions/daily', {
           params: {
             token: auth.token,
@@ -70,7 +75,7 @@ export default class QuizStore {
           params: {
             token: auth.token,
           },
-        })
+        }),
       ])
       this.dailyQuestion = data
       this.dailyQuestionCompleted = completed

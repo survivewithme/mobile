@@ -3,7 +3,7 @@ import { View, Text, Button } from 'react-native'
 import { inject, observer } from 'mobx-react'
 import { NavigationScreenProps, NavigationParams } from 'react-navigation'
 import QuizStore, { Answer } from './stores/quiz'
-import HomeQuestionCell  from './components/HomeQuestionCell'
+import HomeQuestionCell from './components/HomeQuestionCell'
 
 class HomeScreen extends React.Component<{
   navigation: NavigationParams
@@ -41,7 +41,7 @@ class HomeScreen extends React.Component<{
     const { dailyQuestion, dailyQuestionCompleted } = this.props.quiz
     console.log(this.props.quiz.dailyAnswers)
     return (
-      <View style={{ margin: 8, alignItems: 'center', }}>
+      <View style={{ margin: 8, alignItems: 'center' }}>
         {dailyQuestion && !dailyQuestionCompleted ? (
           <HomeQuestionCell
             question={dailyQuestion.question}
@@ -50,13 +50,11 @@ class HomeScreen extends React.Component<{
         ) : (
           <Text>All caught up 🌈</Text>
         )}
-      {this.props.quiz.dailyAnswers.map((answer) => (
-        <View key={answer._id} style={{ backgroundColor: 'red'}}>
-          <Text>
-            {answer.answer.text}
-          </Text>
-        </View>
-      ))}
+        {this.props.quiz.dailyAnswers.map((answer) => (
+          <View key={answer._id} style={{ backgroundColor: 'red' }}>
+            <Text>{answer.answer.text}</Text>
+          </View>
+        ))}
       </View>
     )
   }

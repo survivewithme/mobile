@@ -20,8 +20,7 @@ class LoginScreen extends React.Component<{
   }
 
   componentDidMount() {
-    if (this.emailRef.current)
-      this.emailRef.current.focus()
+    if (this.emailRef.current) this.emailRef.current.focus()
   }
 
   onLoginPress = async () => {
@@ -41,9 +40,7 @@ class LoginScreen extends React.Component<{
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center' }}>
-        <Text style={{ marginTop: 16, fontSize: 24 }}>
-          Survive With Me
-        </Text>
+        <Text style={{ marginTop: 16, fontSize: 24 }}>Survive With Me</Text>
         <View style={{ flexDirection: 'row' }}>
           <TextInput
             ref={this.emailRef}
@@ -86,13 +83,11 @@ class LoginScreen extends React.Component<{
               padding: 8,
               margin: 8,
               backgroundColor: 'green',
-              borderRadius: 4
+              borderRadius: 4,
             }}
             onPress={() => this.onLoginPress()}
           >
-            <Text style={{ color: 'white'}}>
-              Login
-            </Text>
+            <Text style={{ color: 'white' }}>Login</Text>
           </TouchableOpacity>
         </View>
       </View>

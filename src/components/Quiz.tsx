@@ -1,11 +1,5 @@
 import React from 'react'
-import {
-  View,
-  Text,
-  ScrollView,
-  Dimensions,
-  Button,
-} from 'react-native'
+import { View, Text, ScrollView, Dimensions, Button } from 'react-native'
 import { inject, observer } from 'mobx-react'
 import QuizStore, { Quiz, Answer } from '../stores/quiz'
 import QuizQuestionCell from './QuizQuestionCell'
@@ -16,7 +10,6 @@ class QuizComponent extends React.Component<{
   _quiz?: Quiz
   onComplete: () => void
 }> {
-
   scrollViewRef = React.createRef<ScrollView>()
   state = {
     percentComplete: 0,
@@ -32,9 +25,12 @@ class QuizComponent extends React.Component<{
         <ScrollView
           ref={this.scrollViewRef}
           onScroll={(e) => {
-            const { contentOffset: { y } } = e.nativeEvent
+            const {
+              contentOffset: { y },
+            } = e.nativeEvent
             // Roughly calculate the percent down the screen
-            const _percentComplete = 100 * y / height / (quiz.questions.length - 1)
+            const _percentComplete =
+              (100 * y) / height / (quiz.questions.length - 1)
             const percentComplete = Math.min(Math.abs(_percentComplete), 100)
             this.setState({ yOffset: y, percentComplete })
           }}
@@ -59,10 +55,7 @@ class QuizComponent extends React.Component<{
           ))}
           <View style={{ minHeight: height }}>
             <Text style={{ fontSize: 20, padding: 8 }}>Evaluation Saved</Text>
-            <Button
-              title="Back"
-              onPress={this.props.onComplete}
-            />
+            <Button title="Back" onPress={this.props.onComplete} />
           </View>
         </ScrollView>
         <View
