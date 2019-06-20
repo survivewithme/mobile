@@ -1,6 +1,7 @@
 import { decorate, observable } from 'mobx'
 import axios from 'axios'
 import auth from './auth'
+import moment from 'moment'
 
 export interface Answer {
   _id: string
@@ -73,7 +74,7 @@ export default class QuizStore {
         }),
         axios.get('/questions/daily/completed', {
           params: {
-            utcOffset: new Date().getTimezoneOffset(),
+            utcOffset: moment().utcOffset(),
             token: auth.token,
           },
         }),

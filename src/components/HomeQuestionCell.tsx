@@ -23,13 +23,14 @@ export default class HomeQuestionCell extends React.Component<{
           borderRadius: 4,
           padding: 4,
           shadowOffset: {
-            width: 1, height: 1,
+            width: 1,
+            height: 1,
           },
           shadowColor: Colors.black,
-          shadowOpacity: 0.3,
+          shadowOpacity: 0.2,
           shadowRadius: 4,
           backgroundColor: Colors.white,
-          elevation: 3,
+          elevation: 1,
           ...(this.props.style || {}),
         }}
       >
@@ -48,7 +49,9 @@ export default class HomeQuestionCell extends React.Component<{
             answer={answer}
             style={{
               backgroundColor:
-                this.state.selectedAnswerId === answer._id ? Colors.green : Colors.blue,
+                this.state.selectedAnswerId === answer._id
+                  ? Colors.green
+                  : Colors.blue,
               margin: 4,
               padding: 4,
             }}

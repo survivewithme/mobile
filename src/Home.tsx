@@ -41,7 +41,6 @@ class HomeScreen extends React.Component<{
       dailyQuestion,
       dailyQuestionCompleted,
     } = this.props.quiz
-    console.log()
     return (
       <View style={{ margin: 8, alignItems: 'center' }}>
         {dailyQuestion && !dailyQuestionCompleted ? (
