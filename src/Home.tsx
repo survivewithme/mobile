@@ -4,6 +4,9 @@ import { inject, observer } from 'mobx-react'
 import { NavigationScreenProps, NavigationParams } from 'react-navigation'
 import QuizStore, { Answer } from './stores/quiz'
 import HomeQuestionCell from './components/HomeQuestionCell'
+import { LineChart } from 'react-native-chart-kit'
+import Colors from './Colors'
+import moment from 'moment'
 
 class HomeScreen extends React.Component<{
   navigation: NavigationParams
@@ -13,17 +16,12 @@ class HomeScreen extends React.Component<{
     title: 'Home',
   })
 
-  state = {
-    dailyQuizLoaded: false,
-  }
-
   async componentDidMount() {
     await Promise.all([
       this.props.quiz.loadDailyQuiz(),
       this.props.quiz.loadDailyQuestion(),
       this.props.quiz.loadDailyAnswers(),
     ])
-    this.setState({ dailyQuizLoaded: true })
   }
 
   onDailyQuestionAnswer = async (answer: Answer) => {
@@ -38,8 +36,12 @@ class HomeScreen extends React.Component<{
   }
 
   render() {
-    const { dailyQuestion, dailyQuestionCompleted } = this.props.quiz
-    console.log(this.props.quiz.dailyAnswers)
+    const {
+      dailyAnswers,
+      dailyQuestion,
+      dailyQuestionCompleted,
+    } = this.props.quiz
+    console.log()
     return (
       <View style={{ margin: 8, alignItems: 'center' }}>
         {dailyQuestion && !dailyQuestionCompleted ? (
@@ -50,11 +52,57 @@ class HomeScreen extends React.Component<{
         ) : (
           <Text>All caught up 🌈</Text>
         )}
-        {this.props.quiz.dailyAnswers.map((answer) => (
-          <View key={answer._id} style={{ backgroundColor: 'red' }}>
-            <Text>{answer.answer.text}</Text>
+        {dailyAnswers.length ? (
+          <View
+            style={{
+              margin: 8,
+              borderRadius: 4,
+              padding: 4,
+              shadowOffset: {
+                width: 1,
+                height: 1,
+              },
+              shadowColor: Colors.black,
+              shadowOpacity: 0.2,
+              shadowRadius: 4,
+              backgroundColor: Colors.white,
+              elevation: 1,
+            }}
+          >
+            <LineChart
+              data={{
+                labels: [
+                  dailyAnswers.map((answer, index) => {
+                    const day = +moment(answer.createdAt).format('DD')
+                    let format = 'DD'
+                    if (day % 10 === 0 || index === 0) {
+                      format = 'MMM DD'
+                    }
+                    return moment(answer.createdAt).format(format)
+                  }),
+                ],
+                datasets: [
+                  {
+                    data: dailyAnswers.map((answer) =>
+                      Number(answer.answer.pointValue || 0)
+                    ),
+                  },
+                ],
+              }}
+              chartConfig={{
+                backgroundColor: Colors.white,
+                backgroundGradientFrom: Colors.white,
+                backgroundGradientTo: Colors.white,
+                color: (alpha = 1) => `rgba(20, 20, 20, ${alpha})`,
+                strokeWidth: 2,
+              }}
+              fromZero
+              width={300}
+              height={200}
+              bezier
+            />
           </View>
-        ))}
+        ) : null}
       </View>
     )
   }
