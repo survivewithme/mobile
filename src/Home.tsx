@@ -18,8 +18,11 @@ class HomeScreen extends React.Component<{
   }
 
   async componentDidMount() {
-    await this.props.quiz.loadDailyQuiz()
-    await this.props.quiz.loadDailyQuestion()
+    await Promise.all([
+      this.props.quiz.loadDailyQuiz(),
+      this.props.quiz.loadDailyQuestion(),
+      this.props.quiz.loadDailyAnswers(),
+    ])
     this.setState({ dailyQuizLoaded: true })
   }
 
@@ -36,6 +39,7 @@ class HomeScreen extends React.Component<{
 
   render() {
     const { dailyQuestion, dailyQuestionCompleted } = this.props.quiz
+    console.log(this.props.quiz.dailyAnswers)
     return (
       <View style={{ margin: 8, alignItems: 'center', }}>
         {dailyQuestion && !dailyQuestionCompleted ? (
@@ -46,6 +50,13 @@ class HomeScreen extends React.Component<{
         ) : (
           <Text>All caught up 🌈</Text>
         )}
+      {this.props.quiz.dailyAnswers.map((answer) => (
+        <View key={answer._id} style={{ backgroundColor: 'red'}}>
+          <Text>
+            {answer.answer.text}
+          </Text>
+        </View>
+      ))}
       </View>
     )
   }
